@@ -1,5 +1,5 @@
 # TerminalAppGen2_CommandLine-Program
-TerminalAppGen2 is a simple, easy-to-use custom command-line terminal aimed at beginners starting out using command lines. It contains a whole load of cool commands, games and utilities. 
+TerminalAppGen2 is a simple, easy-to-use custom command-line terminal made in C++, and aimed at beginners starting out using command lines. It contains a whole load of cool commands, games and utilities. 
 Source code is neat, using a ton of labels and consistently formatted. 
 There's super cool stuff like a Car Dodge game, Guessing game, tutorials and a whole load more! Try it out today!
 
