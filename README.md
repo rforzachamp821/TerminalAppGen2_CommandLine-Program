@@ -8,3 +8,5 @@ Every release package comes with binaries, source code, and release notes.
 NOTE: please keep in mind that this is not a rolling release program, and it updates every couple of months.
 
 You can find the release notes in the folders that correspond to the version of release notes that you want to see.
+
+Please file any feedback, bugs or issues in the 'Issues' tab above. It would be really helpful, thanks!
