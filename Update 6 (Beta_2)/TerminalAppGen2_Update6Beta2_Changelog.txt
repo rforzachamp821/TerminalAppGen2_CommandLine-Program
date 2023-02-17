@@ -1,0 +1,31 @@
+TerminalApp Gen 2 - Update 6 (Beta_2) - Changelog
+________________________________________________________________________________________________________________________
+This is a follow-up release of the first beta edition of Update 6. There were so many fixed bugs that I decided to release
+another version.
+
+__New Features__
+- Added some extra colour to a few commands that should've had them.
+- Added a timer whenever a player snaps someone in Snap Game. The snapping player has to type something in fast to get the deck cards.
+- Added a few extra words to some commands to make them easier to understand when navigating through the terminal using command numbers.
+- Added 6 NEW COMMANDS which are: UpdateHighScoresIn, UpdateHighScoresOut, DispHighScores, DispConfigFile, CreateConfig and CPUBench.
+- Added a class-based system for high scores so code could look neater and more efficient (please file feedback if issues were found with high scores).
+- This update also introduces a new configuration file way of saving game scores and settings! Instead of using several files for several values, all contents are placed in one singular configuration file. Please file any feedback if there are issues with high scores not saving or being overwritten.
+- DRASTICALLY improved time accuracy of the stopwatch command. It now used std functions and measures in ten-thousandth of a second.
+- Source code neatness improvements
+
+__Bugfixes__
+- Fixed an issue where typing anything on the starting screen of TerminalAppGen2 other than the Enter key would glitch out the command input.
+- Fixed an issue where your high score wouldn't be saved when you exit from any match in the Car Dodge pause menu.
+- Fixed a couple of issues where some commands such as Sleep and Beep wouldn't exit when inputting a character (by removing the exit from character option; the issue was by design)
+- Fixed an issue where the shutdown command would print out random text instead of shutting down.
+- Fixed many issues with commands displaying incorrect colour.
+- Fixed a few issues with the Snap Game, such as allowing the name 'Computer' to be used in Player 2.
+- Fixed an issue where accessing the Ratio Calculator in the calculator command would cause the whole terminal to behave wierdly.
+- Fixed issues with modules, commands and calculators/converters not working right when using the custom-made num() function.
+- Fixed an issue with the Denary to Binary calculator where inputting a negative number would still cause it to continue operating without asking to re-input, causing issues.
+- Fixed negative numbers causing issues in a small number of commands such as Hacker.
+- Fixed a few spelling/typing mistakes throughout the terminal.
+- Fixed issues with the Celsius to Fahrenheit and Fahrenheit to Celsius converters not giving the right conversion answer.
+
+__Known Issues__
+- There still seems to be an issue with FileParse repeating the wrong lines in some cases. This may be fixed soon.
