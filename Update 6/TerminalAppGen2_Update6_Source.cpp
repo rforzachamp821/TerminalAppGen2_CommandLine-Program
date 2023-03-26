@@ -3065,27 +3065,34 @@ void commands() {
 	else if (command == "simplecalc" || command == "scalc" || command == "simpcalc" || command == "37") {
 	long double		nNum1 = 0.0;
 	long double		nNum2 = 0.0;
-	char			cMethod;
+	char			cOperator;
 	long double		nAns = 0.0;
 	slowcharfn(true, "Welcome to a Simple Calculator!");
 	std::cout << "Accepted operators are: +,-,*,/\n\n";
+
+	// input first number
 	nNum1 = num("Please input the first number: > ");
-	std::cout << "Please input your operator: > ";
-	std::cin >> cMethod;
-	if (nNum1 == 0.0 && cMethod == '/') {
+	// input operator
+	std::cout << "Please input your operator (number to exit): > ";
+	std::cin >> cOperator;
+	if (std::cin.fail()) {
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		std::cout << "Exiting...\n";
+		return;
+	}
+	// input second number
+	nNum2 = num("Please input the second number: > ");
+	std::cin.ignore(INT_MAX, '\n');
+
+	// dividing by 0 is not allowed
+	if (nNum1 == 0.0 && cOperator == '/') {
 		std::cout << "Sorry, you cannot use a 0 as your first number when dividing (divide by 0 error). Please retry later.\n";
 		return;
 	}
-	else if (std::cin.fail()) {
-		std::cout << "Sorry, an error occured. Possibly input was incorrect?\n";
-		std::cin.clear();
-		std::cin.ignore(INT_MAX, '\n');
-		return;
-	}
-	nNum2 = num("Please input the second number: > ");
 
-	std::cin.ignore(INT_MAX, '\n');
-	switch (cMethod) {
+
+	switch (cOperator) {
 	case '+':
 		nAns = nNum1 + nNum2;
 		break;
