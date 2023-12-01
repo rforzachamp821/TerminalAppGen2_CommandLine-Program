@@ -1,0 +1,32 @@
+___TerminalAppGen2 Update 7 Beta 1 - Release Notes___
+Welcome to the one of the final updates of TerminalAppGen2. It has been a fun roll working on this program over the past 2-3 years, and I thought of making one last final polish of the program before it gets archived and the project gets terminated.
+Thank you everyone who helped me develop this and get better at programming. Every little bit has counted. And no, it's not just those in the development process, but also those who used the program and gave useful feedback. :D
+I hope to see everyone that contributed again soon. :)
+
+You can try out the new version in development called ZeeTerminal, with a completely new UI and engine, here: 
+https://github.com/rforzachamp821/ZeeTerminal-CommandLine-Program/
+
+__New Features__
+- None
+
+__Changes and Bugfixes__
+- Added version number in the 'about' command.
+- Fixed an issue where in the FileParse command, the line would be read incorrectly when the next command is being read.
+- Fixed an issue where line numbers aren't getting reset when exiting FileParse, which caused issues.
+- Fixed an issue with the cow commands, where any message said by the cow that is larger than the screen width would cause the border of the message to be too thick (more than 1 characters in width).
+- Fixed an issue where the cows look a little off and not fully like cows, missing a neck.
+- Fixed an issue with the FileParse system in the number and string commands when inputting within a command, where the line numbers would be interpreted incorrectly.
+- Fixed an issue with the number 0 failing to be inputted properly when using the FileParse system.
+- Changed some initialisation on startup to increase startup speed by a slight amount.
+- Fixed an issue where any call to std::cin.ignore() when running a FileParse script would require user interaction, which isn't intended. This has been fixed by referencing every call to check if running a FileParse script. If so, it would execute it, otherwise not.
+- Fixed an issue where changing the colour using an argument would change the colour in an unintended manner (basically, not changing the colour to what the user wants).
+- Fixed an issue with some games where any point where the ENTER key has to be pressed would demand for 2 keypresses, and not a singular press.
+- Fixed an issue where Player 2 in the Snap game would have only 6 seconds to type a phrase to take the cards on the centre stack, rather than the intended 10 seconds.
+- In the Power of 2 calculator, any power that is 62 and under can now be calculated, rather than the previous 61 and under.
+- In the Denary to Binary converter, a 'Result of conversion' message will now be displayed.
+- In the Celsius to Fahrenheit converter and vice versa, 'C' for celsius and 'F' for fahrenheit will now be appended after the final converted integer, depending on the new type of value.
+- Fixed an issue where verbose messages would not be displayed when the setting is set to TRUE, as the messages function was looking at the Random Colours at Startup setting.
+- Fixed issues where any extra character input after std::cin.get() would cause leftover characters to remain in the input buffer and would cause them to spill out into other input points in other commands. This has been fixed by changing all std::cin.get() calls to std::cin.ignore(INT_MAX, '\n') calls, as that clears those characters fully (up to 2.1 billion or so can be cleared).
+- Commented a lot of the source code to suggest the workings of different parts of the program.
+- Added a capital X to the allowed versions of the multiplication symbol in the SimpleCalc command.
+- Fixed an issue where SimpleCalc wouldn't exit when inputting a number in the operator input point.
