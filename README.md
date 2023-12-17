@@ -15,6 +15,7 @@ __MAJOR NOTE: This program has reached the end of its life cycle, with its final
 Please note that if you want to compile the source code of this program, you will have to use a Microsoft Visual C++ compiler. Compilation will not work with the GNU set of compilers, as there are some Windows-specific functions used.
 
 Please file any feedback, bugs or issues in the 'Issues' tab above. It would be really helpful, thanks!
+
 __NOTE: After the archive of this project, this was no longer possible. Sorry!__
 
 # License
