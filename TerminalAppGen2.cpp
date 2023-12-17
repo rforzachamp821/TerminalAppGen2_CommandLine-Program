@@ -365,7 +365,7 @@ void colour(int colnum) {
 
 // Function to get console cursor position
 COORD GetConsoleCursorPosition() {
-	HANDLE						console = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	if (GetConsoleScreenBufferInfo(console, &csbi)) {
 		return csbi.dwCursorPosition;
@@ -374,6 +374,14 @@ COORD GetConsoleCursorPosition() {
 		// The function failed. Call GetLastError() for details.
 		COORD invalid = { 0, 0 };
 		return invalid;
+	}
+}
+
+// Function to clear the std::cin flags and stream.
+inline void clearcin() {
+	if (!bIsRunFromFile) {
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
 	}
 }
 
@@ -491,10 +499,7 @@ long double num(std::string prompt) {
 			std::cin >> nNum;
 			// error handling
 			if (std::cin.fail()) {
-				if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+				clearcin();
 				// error message in red
 				colour(12);
 				std::cerr << "Your input was incorrect. Please try again.\n";
@@ -885,7 +890,7 @@ void ratioCalc() {
 	// This module will not work if FileParse is enabled due to num() return constraints.
 	if (bIsRunFromFile == true) {
 		colour(12);
-		std::cout << "Sorry, RatioCalc will not work properly with FileParse enabled yet.\nExiting...\n";
+		std::cout << "Sorry, RatioCalc will not work properly with FileParse enabled.\nExiting...\n";
 		colour(nLastColour);
 		return;
 	}
@@ -906,10 +911,7 @@ void ratioCalc() {
 		std::cin >> nRatioArray[nNumofNums];
 		colour(nLastColour);
 		if (std::cin.fail()) {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			nNumofNums--;
 			break;
 		}
@@ -960,10 +962,7 @@ void binaryToDenary() {
 		getline(std::cin, binary);
 		colour(nLastColour);
 		if (std::cin.fail()) {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			std::cerr << "An error occured. Please try again.\n";
 			didItWork = false;
 			continue;
@@ -1276,12 +1275,9 @@ void snapGameInterface() {
 			std::cout << "################################### SNAP GAME - MENU ######################################\n\n\t\t\t\t[1] Play\n\t\t\t\t[2] How to Play\n\t\t\t\t[3] Exit\n\n######################################################################################\n";
 			std::cout << "\nPlease input your desired number here: > ";
 			std::cin >> inputnum;
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 			if (std::cin.fail()) {
-				if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+				clearcin();
 				std::cout << "Sorry, your input was incorrect. Please try again.\nPress ENTER to continue...";
 				std::cin.ignore(INT_MAX, '\n');
 				cls();
@@ -1295,7 +1291,7 @@ void snapGameInterface() {
 				colour(173);
 				std::cout << "Would you like to play against the computer or another person?\n[1] Real Person\n[2] Computer\n[3] Go to Main Menu";
 				inputnum = num("\nPlease input your desired number here: > ");
-				std::cin.ignore();
+				std::cin.ignore(INT_MAX, '\n');
 				if (inputnum == 3) break;
 
 				colour(173);
@@ -1357,7 +1353,7 @@ void guessGameHardInterface() {
 		std::cout << "\n[1] Play\n[2] Tutorial\n[3] High Score\n[4] Exit\n";
 		std::cout << "Input number here: > ";
 		std::cin >> inputnum;
-		std::cin.ignore();
+		std::cin.ignore(INT_MAX, '\n');
 
 		// Perform tasks according to input number
 		if (inputnum == 1) {
@@ -1409,14 +1405,11 @@ void guessGameHardInterface() {
 			std::cout << "\nThis number is between " << lowernum << " and " << uppernum << ".";
 			std::cout << "\nInput guess number: > ";
 			std::cin >> guessnum;
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 
 			// Exit if input is fatal
 			if (std::cin.fail()) {
-				if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+				clearcin();
 				colour(nLastColour);
 				cls();
 				return;
@@ -1473,10 +1466,7 @@ void guessGameHardInterface() {
 				}
 				else {
 					// Exit game
-					if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+					clearcin();
 					colour(nLastColour);
 					cls();
 					return;
@@ -1639,10 +1629,7 @@ void gameoverhard() {
 	}
 	std::cout << "\n\nPress ENTER to go back to menu... ";
 	scorecar = 0;
-	if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+	clearcin();
 	return;
 }
 
@@ -1683,10 +1670,7 @@ void gameovereasy() {
 	}
 	std::cout << "\n\nPress ENTER to go back to menu... ";
 	scorecar = 0;
-	if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+	clearcin();
 	return;
 }
 
@@ -1708,7 +1692,7 @@ void carInstructions() {
 	slowcharfn(false, "\nPress ESC to exit the current match.");
 	std::cout << "\n\nPress ENTER to go back to the menu...";
 	std::cin.clear();
-	std::cin.ignore();
+	std::cin.ignore(INT_MAX, '\n');
 	std::cin.ignore(INT_MAX, '\n');
 }
 
@@ -1743,7 +1727,7 @@ void carGameEasyMain() {
 	gotoxy(18, 5);
 	std::cout << "Press ENTER to start... ";
 	std::cin.clear();
-	std::cin.ignore();
+	std::cin.ignore(INT_MAX, '\n');
 	std::cin.ignore(INT_MAX, '\n');
 	gotoxy(44, 5);
 	colour(47);
@@ -1920,7 +1904,7 @@ void changecarEasy() {
 		}
 		else {
 			std::cin.clear();
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 			std::cout << "Please retry.\n";
 		}
 		if (inputnum == 1 || inputnum == 2 || inputnum == 3 || inputnum == 4) {
@@ -1983,7 +1967,7 @@ void cardodgeeasy() {
 			}
 			colour(47);
 			std::cout << "\nPress ENTER to continue...";
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 			std::cin.ignore(INT_MAX, '\n');
 			break;
 		case 4:
@@ -1996,18 +1980,12 @@ void cardodgeeasy() {
 			scorecar = 0;
 			colour(nLastColour);
 			cls();
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			return;
 		default:
 			// Beep when wrong press
 			Beep(500, 250);
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 		}
 	} while (true);
 	// exit
@@ -2045,7 +2023,7 @@ void carDodgeEasyMain() {
 	gotoxy(18, 5);
 	std::cout << "Press ENTER to start... ";
 	std::cin.clear();
-	std::cin.ignore();
+	std::cin.ignore(INT_MAX, '\n');
 	std::cin.ignore(INT_MAX, '\n');
 	gotoxy(44, 5);
 	colour(176);
@@ -2223,7 +2201,7 @@ void changecarhard() {
 		}
 		else {
 			std::cin.clear();
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 			std::cout << "Please retry.\n";
 		}
 		if (inputnum == 1 || inputnum == 2 || inputnum == 3 || inputnum == 4) {
@@ -2287,7 +2265,7 @@ void cardodgehard() {
 			}
 			colour(176);
 			std::cout << "\nPress ENTER to continue...";
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 			std::cin.ignore(INT_MAX, '\n');
 			break;
 		case 4:
@@ -2300,18 +2278,12 @@ void cardodgehard() {
 			scorecar = 0;
 			colour(nLastColour);
 			cls();
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			return;
 		default:
 			// Beep when incorrect input detected
 			Beep(500, 250);
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 		}
 
 	} while (true);
@@ -2353,10 +2325,7 @@ void guessgameeasy() {
 		}
 		else {
 			// Exit when any other number is pressed, even though only 3 is in the options
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			colour(nLastColour);
 			cls();
 			return;
@@ -2379,10 +2348,7 @@ void guessgameeasy() {
 
 			// Exit if fatal input
 			while (std::cin.fail()) {
-				if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+				clearcin();
 				colour(nLastColour);
 				cls();
 				return;
@@ -2396,10 +2362,7 @@ void guessgameeasy() {
 					break;
 				}
 				else {
-					if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+					clearcin();
 					colour(nLastColour);
 					cls();
 					return;
@@ -2439,10 +2402,7 @@ void guessgameeasy() {
 				}
 				else {
 					// exit
-					if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+					clearcin();
 					colour(nLastColour);
 					cls();
 					return;
@@ -2467,10 +2427,7 @@ void commands() {
 		colour(14);
 		std::cin >> input;
 		colour(nLastColour);
-		if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+		clearcin();
 		if (input == 'y') tutorial(true);
 		return;
 	}
@@ -2571,10 +2528,7 @@ void commands() {
 
 		// If hertz input is 0, exit program
 		if (hertz <= 0) {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			return;
 		}
 		// Enter milliseconds number
@@ -2583,7 +2537,7 @@ void commands() {
 		// If millisecond input is 0, exit program
 		if (milsecs <= 0) {
 			std::cin.clear();
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 			return;
 		}
 
@@ -2595,10 +2549,7 @@ void commands() {
 		Beep(hertz, milsecs);
 		std::cout << "\nDone.\n\n";
 		clearkeebbuf();
-		if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+		clearcin();
 		return;
 	}
 	// sleep
@@ -2613,10 +2564,7 @@ void commands() {
 
 		// Exit if 0 is inputted
 		if (sleeptime <= 0) {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			return;
 		}
 		colourtxt("Timing...\n");
@@ -2624,10 +2572,7 @@ void commands() {
 		std::cout << "\nTimer finished.\n";
 		// Clear keyboard buffer
 		clearkeebbuf();
-		if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+		clearcin();
 		return;
 	}
 	// echo
@@ -2713,10 +2658,7 @@ void commands() {
 			break;
 		default:
 			std::cin.clear();
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			break;
 		}
 		colour(nLastColour);
@@ -2734,7 +2676,7 @@ void commands() {
 	}
 	// about
 	else if (command == "about" || command == "abt" || command == "15") {
-		std::cout << "\n\t\tTerminalAppGen2- Update v7 Beta\n\n";
+		std::cout << "\n\t\tTerminalAppGen2- Update v7\n\n";
 		std::cout << "Please press '1' or '2' if you want:\n[1] Credits and message\n[2] TerminalAppGen2 License\n";
 		input = _getch();
 		if (input == '1')
@@ -2768,6 +2710,7 @@ void commands() {
 		colour(15);
 		slowcharfn(true, "I hope you all like this program so far. I really enjoy making this program with my friends and family,\nand recieveing feedback that is helpful to the development of it. I will hopefully learn more\nwith regards to programming while developing apps to make your experience with my programs a \nlot nicer.\nThanks guys! :)\n");
 		colour(nLastColour);
+		return;
 
 		// Display License info
 	licence:
@@ -2798,16 +2741,13 @@ void commands() {
 
 				if (coloption <= 0) {
 					std::cin.clear();
-					std::cin.ignore();
+					std::cin.ignore(INT_MAX, '\n');
 					return;
 				}
 
 				// Display message if input was fatal
 				if (std::cin.fail()) {
-					if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+					clearcin();
 					std::cerr << "Please input a number from the list and try again.\n";
 				}
 
@@ -2824,7 +2764,7 @@ void commands() {
 			nLastColour = coloption;
 			// ansicol set to 0 to show that this is not an ansi colour
 			ansicol = 0;
-			std::cin.ignore();
+			std::cin.ignore(INT_MAX, '\n');
 			return;
 		}
 		else {
@@ -2895,11 +2835,6 @@ void commands() {
 	// textedit
 	else if (command == "note" || command == "21") {
 		int innum = 1;
-		// You can't use this with the FileParse feature.
-		if (bIsRunFromFile == true) {
-			std::cout << "Sorry, you cannot run this command from the FileParse feature.\n";
-			return;
-		}
 		std::cout << "\nWelcome to Notes!\n\nYou can set notes and they will be saved permanently, unless if you delete the ";
 		colour(3);
 		std::cout << "Notes.txt";
@@ -2922,9 +2857,7 @@ void commands() {
 			std::cout << innum;
 			colour(nLastColour);
 			std::cout << ": ";
-			colour(14);
-			getline(std::cin, text);
-			colour(nLastColour);
+			text = str("");
 			// Exit if ^exit was typed
 			if (text == "^exit") {
 				// close to save memory
@@ -2945,11 +2878,8 @@ void commands() {
 		std::cin >> input;
 		colour(nLastColour);
 
-		while (std::cin.fail()) {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+		if (std::cin.fail()) {
+			clearcin();
 			return;
 		}
 		if (input == 'y') {
@@ -2957,10 +2887,7 @@ void commands() {
 			system("shutdown /r /t 0");
 		}
 		else {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			return;
 		}
 	}
@@ -2972,10 +2899,7 @@ void commands() {
 		colour(nLastColour);
 
 		while (std::cin.fail()) {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			return;
 		}
 		if (input == 'y') {
@@ -2983,10 +2907,7 @@ void commands() {
 			system("shutdown /s /t 0");
 		}
 		else {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+			clearcin();
 			return;
 		}
 	}
@@ -3063,7 +2984,7 @@ void commands() {
 		delete* pMemtest;
 		pMemtest = nullptr;
 		// ignore other input before returning
-		std::cin.ignore();
+		std::cin.ignore(INT_MAX, '\n');
 		return;
 	}
 	// ipinfo
@@ -3074,10 +2995,7 @@ void commands() {
 	// cpustress
 	else if (command == "cpustress" || command == "28") {
 		std::cout << "Welcome to the CPU Stress test.\nThis is a simple single core stress test.\nPress any key in the middle of the stress test to exit.\n\nPress ENTER to begin stress test...";
-		if (!bIsRunFromFile) {
-			std::cin.clear();
-			std::cin.ignore(INT_MAX, '\n');
-		}
+		clearcin();
 
 		// stress test part
 		float num = 1.5;
@@ -3106,10 +3024,7 @@ void commands() {
 			// This time, it's a switch statement of course
 			switch (inputnum) {
 			case 0:
-				if (!bIsRunFromFile) {
-					std::cin.clear();
-					std::cin.ignore(INT_MAX, '\n');
-				}
+				clearcin();
 				return;
 			case 1:
 				percIncDecCalc();
@@ -3130,10 +3045,7 @@ void commands() {
 				ratioCalc();
 				break;
 			default:
-				if (!bIsRunFromFile) {
-					std::cin.clear();
-					std::cin.ignore(INT_MAX, '\n');
-				}
+				clearcin();
 				std::cerr << "Please input a valid option.\n";
 				break;
 			}
@@ -3150,10 +3062,7 @@ void commands() {
 			// This time, it's a switch statement of course
 			switch (inputnum) {
 			case 0:
-				if (!bIsRunFromFile) {
-					std::cin.clear();
-					std::cin.ignore(INT_MAX, '\n');
-				}
+				clearcin();
 				return;
 			case 1:
 				celsiusToFahrenheit();
@@ -3174,19 +3083,13 @@ void commands() {
 				denaryToBinary();
 				break;
 			default:
-				if (!bIsRunFromFile) {
-					std::cin.clear();
-					std::cin.ignore(INT_MAX, '\n');
-				}
+				clearcin();
 				std::cerr << "Please input a valid option.\n";
 				break;
 			}
 		} while (true);
 
-		if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+		clearcin();
 		return;
 	}
 	// Mario
@@ -3316,28 +3219,28 @@ void commands() {
 		long double		nNum2 = 0.0;
 		char			cOperator;
 		long double		nAns = 0.0;
+
 		slowcharfn(true, "Welcome to a Simple Calculator!");
 		std::cout << "Accepted operators are: +,-,*,/\n\n";
 
 		// input first number
 		nNum1 = num("Please input the first number: > ");
 		// input operator
-		std::cout << "Please input your operator (number to exit): > ";
-		colour(14);
-		std::cin >> cOperator;
-		colour(nLastColour);
-		if (std::cin.fail() || (cOperator != '+' && cOperator != '-' && cOperator != '*' && cOperator != 'x' && cOperator != 'X' && cOperator != '/')) {
-			if (!bIsRunFromFile) {
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-			}
+		spare = str("Please input your operator (number to exit): > ");
+
+		if (spare != "+" && spare != "-" && spare != "*" && spare != "x" && spare != "X" && spare != "/") {
 			std::cout << "Exiting...\n";
 			return;
 		}
+
+		// Assign operator to first character in input string
+		cOperator = spare[0];
+
 		// input second number
 		nNum2 = num("Please input the second number: > ");
-		std::cin.ignore(INT_MAX, '\n');
 
+		clearcin();
+		
 		// dividing by 0 is not allowed
 		if (nNum2 == 0.0 && cOperator == '/') {
 			std::cout << "Sorry, you cannot use a 0 as your second number when dividing (divide by 0 error). Please retry later.\n";
@@ -3453,7 +3356,7 @@ void commands() {
 		std::cout << "\nHere's a list of options for programs to open (0 to exit):\n";
 		std::cout << "[1] File Explorer\n[2] Control Panel\n[3] MSPaint\n[4] Device Manager\n[5] Disk Management\n[6] Microsoft Edge\n[7] Administrative Tools\n[8] Services\n[9] Task Manager\n[10] Other (Type a Directory)\n";
 		inputnum = num("\nPlease input your choice here: > ");
-		std::cin.ignore();
+		std::cin.ignore(INT_MAX, '\n');
 
 		// check if exit
 		if (inputnum == 0) {
@@ -3724,10 +3627,7 @@ void commands() {
 		colour(nLastColour);
 		std::cout << "Are you sure you want to continue? [y/n]: > ";
 		std::cin >> input;
-		if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
+		clearcin();
 		// check if yes or no
 		if (input != 'y') return;
 
@@ -3745,26 +3645,8 @@ void commands() {
 		slowcharfn(true, "\nWelcome to the CPU Benchmark test.");
 		colour(nLastColour);
 		std::cout << "This is a simple, single core benchmark test that does floating-point multiplication.\nYou can press any key in the middle of the test to stop.\n\nThe default number of reiterations is 100 thousand, and maximum is 12 trillion.";
-		std::cout << "\nPlease type in the number of reiterations to do (input 0 for default value, or a character to exit): > ";
-		std::cin >> nCpuBench;
-
-		// Abort if something hapened in std::cin stream
-		if (std::cin.fail()) {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
-			colour(12);
-			std::cout << "Exiting...\n";
-			colour(nLastColour);
-			return;
-		}
-		else {
-			if (!bIsRunFromFile) {
-	std::cin.clear();
-	std::cin.ignore(INT_MAX, '\n');
-}
-		}
+		std::cout << "\n";
+		nCpuBench = num("Please type in the number of reiterations to do (input 0 for default value, or a character to exit): > ");
 
 		// Set default if input is 0
 		if (nCpuBench == 0) {
@@ -4166,7 +4048,7 @@ int main(int nArgsNum, char* pszArgs[]) {
 				std::cerr << "There are still saved temporary notes in this program. If you exit, those notes will be lost.\nProceed to exit? [y/n] > ";
 				colour(14);
 				std::cin >> input;
-				std::cin.ignore();
+				std::cin.ignore(INT_MAX, '\n');
 				if (input != 'y') {
 					colour(12);
 					std::cout << "Aborted.\n";
