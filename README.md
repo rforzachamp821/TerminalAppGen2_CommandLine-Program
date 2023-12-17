@@ -16,7 +16,7 @@ Please note that if you want to compile the source code of this program, you wil
 
 Please file any feedback, bugs or issues in the 'Issues' tab above. It would be really helpful, thanks!
 
-__NOTE: After the archive of this project, this was no longer possible. Sorry!__
+__NOTE: After the archive of this project, filing feedback under 'Issues' was no longer possible. Feedback will no longer be taken into consideration for this program, due to how it's archived and terminated now.__
 
 # License
 By using this program, you must understand that this program has an MIT license. If you do not agree to the license, do not download this program.
