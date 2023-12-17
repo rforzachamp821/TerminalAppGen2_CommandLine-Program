@@ -1,0 +1,12 @@
+___TerminalAppGen2 Update 7 Release Notes___
+THE FINAL UPDATE.
+
+__New Features__
+- None
+
+__Changes and Bugfixes__
+- Changed all std::cin.ignore() calls to std::cin.ignore(INT_MAX, '\n') calls, as more in the std::cin stream input buffer can now be cleared at one time. 
+- Neatened up source code a lot, mostly whitespacing improvements.
+- Fixed the SimpleCalc command not working under the FileParse mode when inputting an operator.
+- Fixed the CPUBench command reiteraion input not working under FileParse mode.
+- Added FileParse support to the Note command. You can now use it in your desired script, and also execute 'saynote' to display the notes.
